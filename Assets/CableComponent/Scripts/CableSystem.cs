@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Raskulls.Events;
 public class CableSystem : MonoBehaviour {
     public List<CableDetection> EndBase;
+    public GameEvent Puzzle1WinEvent;
 
+    
     private void Update()
     {
         if (check())
-            print("Cool");
+        {
+            Puzzle1WinEvent.Raise();
+            enabled = false;
+        }
     }
 
     public bool check()
