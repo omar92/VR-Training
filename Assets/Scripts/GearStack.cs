@@ -31,6 +31,11 @@ public class GearStack : MonoBehaviour
 
     public GearRotation gearRotation;
 
+    public void IsGearHeld(bool value)
+    {
+        gearHeld = value;
+    }
+
     private void Update()
     {
         if (gearHeld)
