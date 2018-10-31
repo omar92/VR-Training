@@ -14,13 +14,13 @@ public class CableDetection : MonoBehaviour {
 
     
 
-    private void OnCollisionStay(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
 
         if (other.gameObject.tag == "EndBase" && other.gameObject.GetComponent<MeshRenderer>().material.color == material.color)
         {
             Correct = true;
-            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().isKinematic = true;
             transform.position = other.transform.position;
         }
         else
@@ -33,5 +33,7 @@ public class CableDetection : MonoBehaviour {
     private void OnCollisionExit(Collision other)
     {
         Correct = false;
+        if(other.gameObject.tag=="EndBase")
+            GetComponent<Rigidbody>().isKinematic = false;
     }
 }
