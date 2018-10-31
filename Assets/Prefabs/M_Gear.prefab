@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 64567424965713480}
   - component: {fileID: 114230473833569328}
   - component: {fileID: 114258171124554098}
+  - component: {fileID: 114755283770071834}
   m_Layer: 0
   m_Name: M_Gear
   m_TagString: Gear
@@ -96,7 +97,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -130,6 +131,13 @@ MonoBehaviour:
   rigidBody: {fileID: 54430640230619472}
   meshRenderer: {fileID: 23702476164853616}
   angularVelocity: 0
+  gearMoved:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  drivingID: 1000
+  load: 0
 --- !u!114 &114258171124554098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,7 +152,22 @@ MonoBehaviour:
   pins: []
   snappingDis: {fileID: 11400000, guid: a166920623d75e942b48e1b41ec88dd6, type: 2}
   rb: {fileID: 54430640230619472}
+  mc: {fileID: 64567424965713480}
   snapTime: 0.1
-  gearSnapping: 0
   gearHeld: 0
+  gearRotation: {fileID: 114230473833569328}
+--- !u!114 &114755283770071834
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650033771934140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b4a06db5ef585449267d52e6918bed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 23702476164853616}
+  movingMaterial: {fileID: 2100000, guid: b166a9404820b7a4dafb77e688e7989f, type: 2}
+  stoppedMaterial: {fileID: 2100000, guid: 2746acb937176c9489374eb9b07611d5, type: 2}
   gearRotation: {fileID: 114230473833569328}
