@@ -26,6 +26,8 @@ public class ScrewScript : MonoBehaviour {
             cover.ScrewRemoved(screwNum);
         }
 
-        GetComponent<Rigidbody>().AddForce(transform.up*throwForce); 
+        GetComponent<Rigidbody>().isKinematic = false;  
+        GetComponent<Rigidbody>().AddForce(transform.up*throwForce);
+        this.enabled = false;
     }
 }
