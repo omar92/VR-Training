@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114911245952993074}
   - component: {fileID: 114162647339895974}
   - component: {fileID: 114257202694238994}
+  - component: {fileID: 114618335372399308}
   m_Layer: 0
   m_Name: SpurtingObjects
   m_TagString: Untagged
@@ -81,12 +82,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e839e4c12473014b9b3d3faccc0f61d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 5e1b73d079df0374bb7f50cc14385319, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114911245952993074}
+        m_MethodName: SecondPuzzleFinished
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &114618335372399308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1332048856949368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e839e4c12473014b9b3d3faccc0f61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: 78181fb5ca643b249855c795868bb258, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114911245952993074}
-        m_MethodName: StopSpurting
+        m_MethodName: ThirdPuzzleFinished
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -116,4 +145,5 @@ MonoBehaviour:
   - {fileID: 114983906446400144, guid: 61110dd797a0ce94ba8e867d039e28f1, type: 2}
   - {fileID: 114202041576913786, guid: 168d187250e67ef47b1e0ad942752044, type: 2}
   playerPos: {fileID: 0}
-  Spurting: 1
+  secondPuzzleGoing: 1
+  thirdPuzzleGoing: 1

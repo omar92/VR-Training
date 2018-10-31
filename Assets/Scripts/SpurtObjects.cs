@@ -8,21 +8,27 @@ public class SpurtObjects : MonoBehaviour
 
     public Transform playerPos;
 
-    public bool Spurting = true;
+    public bool secondPuzzleGoing = true;
+    public bool thirdPuzzleGoing = true;
 
     public void StartSpurting()
     {
         StartCoroutine(SpurtingCoroutine());
     }
 
-    public void StopSpurting()
+    public void SecondPuzzleFinished()
     {
-        Spurting = false;
+        secondPuzzleGoing = false;
+    }
+
+    public void ThirdPuzzleFinished()
+    {
+        thirdPuzzleGoing = false;
     }
 
     IEnumerator SpurtingCoroutine()
     {
-        while (Spurting)
+        while (secondPuzzleGoing || thirdPuzzleGoing)
         {
             yield return new WaitForSeconds(Random.value * 3);
             SpurtingObject newSpurter =
