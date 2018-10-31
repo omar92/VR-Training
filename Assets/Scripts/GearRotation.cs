@@ -32,6 +32,7 @@ public class GearRotation : MonoBehaviour
         set
         {
             rigidBody.angularVelocity = value;
+            angularVelocity = value.z;
         }
     }
 
@@ -45,7 +46,7 @@ public class GearRotation : MonoBehaviour
 
     private void Update()
     {
-        if (angularVelocity > 0)
+        if (Mathf.Abs(angularVelocity) > 0)
             rigidBody.angularVelocity = new Vector3(0, 0, angularVelocity);
     }
 
@@ -57,6 +58,7 @@ public class GearRotation : MonoBehaviour
             if (otherGear.AngularVelocity.z > 0)
             {
                 AngularVelocity = -otherGear.AngularVelocity * (otherGear.Diameter / Diameter);
+                print(string.Format("other {0}, mine {1}", otherGear.angularVelocity, angularVelocity));
             }
         }
     }
