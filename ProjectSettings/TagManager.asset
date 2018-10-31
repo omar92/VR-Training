@@ -8,6 +8,7 @@ TagManager:
   - projectile
   - Gear
   - Pin
+  - EndBase
   layers:
   - Default
   - TransparentFX
