@@ -12,15 +12,25 @@ public class CableDetection : MonoBehaviour {
         material = GetComponent<MeshRenderer>().material;
     }
 
-    private void OnTriggerStay(Collider other)
+    
+
+    private void OnCollisionStay(Collision other)
     {
 
-        if (other.tag == "EndBase" && other.gameObject.GetComponent<MeshRenderer>().material.color == material.color) 
+        if (other.gameObject.tag == "EndBase" && other.gameObject.GetComponent<MeshRenderer>().material.color == material.color)
+        {
             Correct = true;
+            GetComponent<Rigidbody>().isKinematic = false;
+            transform.position = other.transform.position;
+        }
         else
+        {
+
             Correct = false;
+            
+        }
     }
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
         Correct = false;
     }
