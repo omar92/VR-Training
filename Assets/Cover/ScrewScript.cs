@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ScrewScript : MonoBehaviour {
 
     public int screwNum = 0;
-
-	// Use this for initialization
-	void Start () {
+    public float throwForce=5;
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -16,12 +17,15 @@ public class ScrewScript : MonoBehaviour {
 		
 	}
 
-    public void ScrewRemoved()
+
+    public void ScrewRemove()
     {
         var cover = GetComponentInParent<CoverPuzzle>();
         if (cover)
         {
             cover.ScrewRemoved(screwNum);
         }
+
+        GetComponent<Rigidbody>().AddForce(transform.up*throwForce); 
     }
 }

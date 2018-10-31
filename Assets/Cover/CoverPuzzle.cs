@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Raskulls.Events;
+using Raskulls.Variables;
 //using 
 public class CoverPuzzle : MonoBehaviour {
-    readonly bool[] IsScrowWelded = new bool[4];
 
-	// Use this for initialization
-	void Start () {
+    public GameEvent Level1FinishedEvent;
+
+   readonly bool[] IsScrowWelded = new bool[4];
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -28,7 +33,7 @@ public class CoverPuzzle : MonoBehaviour {
 
     private void PuzzelFinishedAction()
     {
-       
+        Level1FinishedEvent.Raise();
     }
 
     private bool CheckIsPuzzelFinished()
