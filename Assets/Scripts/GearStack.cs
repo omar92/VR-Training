@@ -68,8 +68,11 @@ public class GearStack : MonoBehaviour
             }
             mc.isTrigger = true;
         }
-        else if(!gearFixed)
+        else if (!gearFixed)
+        {
             mc.isTrigger = false;
+            rb.useGravity = true;
+        }
     }
 
     bool StackGear()
