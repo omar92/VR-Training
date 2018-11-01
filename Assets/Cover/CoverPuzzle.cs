@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Raskulls.Events;
 using Raskulls.Variables;
+using Valve.VR;
 //using 
 public class CoverPuzzle : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class CoverPuzzle : MonoBehaviour
 
     private void PuzzelFinishedAction()
     {
+        GetComponent<Valve.VR.InteractionSystem.Interactable>().enabled = true;
+       // GetComponent<Valve.VR.InteractionSystem.Throwable>().enabled = true;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(transform.forward * -throwForce);
 

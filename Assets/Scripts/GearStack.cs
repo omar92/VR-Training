@@ -54,6 +54,8 @@ public class GearStack : MonoBehaviour
 
         else if (gearSnapping)
         {
+            rb.angularVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             rb.isKinematic = false;
             rb.useGravity = false;
             gearRotation.enabled = true;

@@ -38,14 +38,14 @@ public class GearRotation : MonoBehaviour
         get
         {
             if (Mathf.Abs(angularVelocity) > 0)
-                return new Vector3(0, 0, angularVelocity);
+                return new Vector3(angularVelocity, 0, 0);
             else if (drivingMotor)
                 return -drivingMotor.AngularVelocity * (drivingMotor.Diameter / Diameter);
             return Vector3.zero;
         }
         set
         {
-            angularVelocity = value.z;
+            angularVelocity = value.x;
         }
     }
 
@@ -84,7 +84,7 @@ public class GearRotation : MonoBehaviour
     IEnumerator GearStillMoving()
     {
         yield return new WaitForSeconds(1.5f);
-        if(AngularVelocity.z > 0)
+        if(AngularVelocity.x > 0)
         {
             gearMoved.Invoke();
         }

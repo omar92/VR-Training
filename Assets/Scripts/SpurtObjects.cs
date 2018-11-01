@@ -35,8 +35,8 @@ public class SpurtObjects : MonoBehaviour
                 Instantiate(spurters[Random.Range(0, spurters.Count)], transform);
 
             newSpurter.rb.AddForce(
-                (playerPos.position - newSpurter.transform.position).normalized *
-                (Random.value * 10 + 5) +
+                (playerPos.position - newSpurter.transform.position) +
+                (Vector3.up  * (Random.value * 10 + 5)) +
                 Random.insideUnitSphere * Random.value * 5,
                 ForceMode.Impulse
                 );
