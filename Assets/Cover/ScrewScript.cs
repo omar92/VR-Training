@@ -7,6 +7,7 @@ public class ScrewScript : MonoBehaviour {
 
     public int screwNum = 0;
     public float throwForce=5;
+    public CoverPuzzle cover;
     // Use this for initialization
     void Start () {
 		
@@ -20,7 +21,7 @@ public class ScrewScript : MonoBehaviour {
 
     public void ScrewRemove()
     {
-        var cover = GetComponentInParent<CoverPuzzle>();
+        
         if (cover)
         {
             cover.ScrewRemoved(screwNum);
