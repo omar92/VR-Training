@@ -5,22 +5,36 @@ using System.Linq;
 
 public class GearStack : MonoBehaviour
 {
+    [HideInInspector]
     public List<GearPin> pins;
-    public Raskulls.Variables.FloatVariable snappingDis;
+
+    [SerializeField]
+    Raskulls.Variables.FloatVariable snappingDis;
 
     public Rigidbody rb;
 
-    public float snapTime = 0.1f;
+    [SerializeField]
+    MeshCollider mc;
+
+    [SerializeField]
+    float snapTime = 0.1f;
 
     Vector3 currentVelocity;
-    
-    public bool gearSnapping;
+
+    bool gearSnapping;
+
+    bool gearFixed;
 
     public bool gearHeld;
 
-    Vector3 pinPos;
+    GearPin gearPin;
 
     public GearRotation gearRotation;
+
+    public void IsGearHeld(bool value)
+    {
+        gearHeld = value;
+    }
 
     private void Update()
     {
@@ -28,30 +42,43 @@ public class GearStack : MonoBehaviour
         {
             rb.useGravity = false;
             gearRotation.enabled = false;
+            if (gearPin != null)
+            {
+                gearPin.occupied = false;
+                gearPin = null;
+            }
             gearSnapping = StackGear();
+            rb.isKinematic = true;
+            mc.isTrigger = true;
         }
 
         else if (gearSnapping)
         {
+            rb.isKinematic = false;
             rb.useGravity = false;
             gearRotation.enabled = true;
-            transform.position = Vector3.SmoothDamp(transform.position, pinPos, ref currentVelocity, snapTime);
-            if ((transform.position - pinPos).magnitude < 0.01f)
+            transform.position = Vector3.SmoothDamp(transform.position, gearPin.Position,
+                ref currentVelocity, snapTime);
+            if ((transform.position - gearPin.Position).magnitude < 0.01f)
             {
                 gearSnapping = false;
-                transform.position = pinPos;
+                transform.position = gearPin.Position;
             }
+            mc.isTrigger = true;
         }
+        else if(!gearFixed)
+            mc.isTrigger = false;
     }
 
     bool StackGear()
     {
         GearPin closestPin = ClosestPin();
+        gearFixed = false;
         if (closestPin != null)
         {
-            pinPos = closestPin.Position;
-            print(pinPos);
+            gearPin = closestPin;
             transform.forward = closestPin.transform.up;
+            gearFixed = true;
             return true;
         }
         return false;
@@ -65,7 +92,7 @@ public class GearStack : MonoBehaviour
         {
             float newDis = (pins[i].Position - transform.position).magnitude;
 
-            if (newDis < closestDis)
+            if (!pins[i].occupied && newDis < closestDis)
             {
                 closestDis = newDis;
                 closestPin = pins[i];

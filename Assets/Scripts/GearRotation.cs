@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GearRotation : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class GearRotation : MonoBehaviour
     MeshRenderer meshRenderer;
     [SerializeField]
     float angularVelocity;
+
+    [SerializeField]
+    UnityEvent gearMoved;
+
+    GearRotation drivingMotor;
+
+    public int drivingID = 1000;
+
+    public bool load;
 
     public Vector3 Position
     {
@@ -27,11 +37,14 @@ public class GearRotation : MonoBehaviour
     {
         get
         {
-            return rigidBody.angularVelocity;
+            if (Mathf.Abs(angularVelocity) > 0)
+                return new Vector3(0, 0, angularVelocity);
+            else if (drivingMotor)
+                return -drivingMotor.AngularVelocity * (drivingMotor.Diameter / Diameter);
+            return Vector3.zero;
         }
         set
         {
-            rigidBody.angularVelocity = value;
             angularVelocity = value.z;
         }
     }
@@ -44,27 +57,66 @@ public class GearRotation : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Awake()
     {
-        if (Mathf.Abs(angularVelocity) > 0)
-            rigidBody.angularVelocity = new Vector3(0, 0, angularVelocity);
+        rigidBody.angularVelocity = AngularVelocity;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Gear"))
+        if (drivingID > 0 && other.tag.Equals("Gear"))
         {
             GearRotation otherGear = other.GetComponent<GearRotation>();
-            if (otherGear.AngularVelocity.z > 0)
+            if (otherGear.drivingID < drivingID)
             {
-                AngularVelocity = -otherGear.AngularVelocity * (otherGear.Diameter / Diameter);
-                print(string.Format("other {0}, mine {1}", otherGear.angularVelocity, angularVelocity));
+                drivingID = otherGear.drivingID + 1;
+                drivingMotor = otherGear;
+                rigidBody.angularVelocity = AngularVelocity;
+                if (load)
+                {
+                    load = false;
+                    StartCoroutine(GearStillMoving());
+                }
+            }
+        }
+    }
+
+    IEnumerator GearStillMoving()
+    {
+        yield return new WaitForSeconds(1.5f);
+        if(AngularVelocity.z > 0)
+        {
+            gearMoved.Invoke();
+        }
+        else
+        {
+            load = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (drivingID > 0 && other.tag.Equals("Gear"))
+        {
+            GearRotation otherGear = other.GetComponent<GearRotation>();
+            if (otherGear.drivingID < drivingID)
+            {
+                drivingID = otherGear.drivingID + 1;
+                drivingMotor = otherGear;
+                rigidBody.angularVelocity = AngularVelocity;
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        rigidBody.angularVelocity = Vector3.zero;
+        GearRotation otherGear = other.GetComponent<GearRotation>();
+
+        if (drivingID > 0 && drivingMotor && other.GetInstanceID() == drivingMotor.GetInstanceID())
+        {
+            drivingMotor = null;
+            rigidBody.angularVelocity = AngularVelocity;
+            drivingID = 1000;
+        }
     }
 }

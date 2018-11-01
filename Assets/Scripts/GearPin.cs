@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GearPin : MonoBehaviour
 {
+    public bool occupied;
     public Vector3 Position
     {
         get
